@@ -58,9 +58,17 @@ module uart_adder_top(
     assign operB = operAB[31:0];
 
     // assign {Cout, ALUout} = (operA + operB) + sub; // using + operator
+    
     // RCA32 rca32bit(.Cin(sub), .operA, .operB, .resultOUT(ALUout), .Cout); // ripple carry
-    CLA32 cla32bit(.Cin(sub), .operA, .operB, .resultOUT(ALUout), .Cout); // ripple carry
+    
+    // CLA32 cla32bit(.Cin(sub), .operA, .operB, .resultOUT(ALUout), .Cout); // carry look-ahead
+    
+    // CSA_4bit6oper csa_adder(.operA(operAB[23:20]), .operB(operAB[19:16]), .operC(operAB[15:12]),
+    //             .operD(operAB[11:8]), .operE(operAB[7:4]), .operF(operAB[3:0]),
+    //             .result(ALUout[6:0])); assign Cout = sub;
 
-
+    // CNSA cnsa_adder(.Cin(sub), .operA(operA[7:0]), .operB(operB[7:0]), .resultOUT(ALUout[7:0]), .Cout);
+    
+    CSKA32 cska_32bit(.Cin(sub), .operA, .operB, .resultOUT(ALUout), .Cout);
 
 endmodule

@@ -33,9 +33,9 @@ module tb_CSKA32;
     // Instantiate CSKA32
     CSKA32 uut (
         .Cin(Cin),
-        .A(A),
-        .B(B),
-        .Sum(Sum),
+        .operA(A),
+        .operB(B),
+        .resultOUT(Sum),
         .Cout(Cout)
     );
 

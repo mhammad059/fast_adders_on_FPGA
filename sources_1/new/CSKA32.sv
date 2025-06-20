@@ -22,9 +22,9 @@
 
 module CSKA32 (
     input logic Cin,
-    input logic [31:0] A,
-    input logic [31:0] B,
-    output logic [31:0] Sum,
+    input logic [31:0] operA,
+    input logic [31:0] operB,
+    output logic [31:0] resultOUT,
     output logic        Cout
 );
 
@@ -43,8 +43,8 @@ module CSKA32 (
         for (i = 0; i < 8; i = i + 1) begin : gen_8
 
             // 4-bit chunks
-            wire [3:0] Ai = A[4*i +: 4];
-            wire [3:0] Bi = B[4*i +: 4];
+            wire [3:0] Ai = operA[4*i +: 4];
+            wire [3:0] Bi = operB[4*i +: 4];
 
             // RCA4 blocks
             RCA4 #(.N(4)) rca_inst (
@@ -62,7 +62,7 @@ module CSKA32 (
             assign carries[i+1] = block_propagate[i] ? carries[i] : block_cout[i];
 
             // Assign result
-            assign Sum[4*i +: 4] = partial_sum[i];
+            assign resultOUT[4*i +: 4] = partial_sum[i];
 
         end
     endgenerate
